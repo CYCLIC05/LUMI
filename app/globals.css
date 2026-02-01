@@ -1,0 +1,102 @@
+:root {
+  /* Default (Dark) Theme */
+  --background: #050511;
+  --surface: #12121f;
+  --surface-highlight: #1e1e2d;
+
+  --text-main: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --primary: #3b82f6;
+  --primary-glow: rgba(59, 130, 246, 0.5);
+
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+
+  --font-family: 'Inter', system-ui, sans-serif;
+  --nav-height: 80px;
+}
+
+[data-theme='light'] {
+  --background: #f8fafc;
+  /* Slate 50 */
+  --surface: #ffffff;
+  --surface-highlight: #f1f5f9;
+  /* Slate 100 */
+
+  --text-main: #0f172a;
+  /* Slate 900 */
+  --text-secondary: #475569;
+  /* Slate 600 */
+  --text-muted: #94a3b8;
+  /* Slate 400 */
+
+  --primary-glow: rgba(59, 130, 246, 0.2);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  padding-bottom: var(--nav-height);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  padding-bottom: var(--nav-height);
+  /* Space for bottom nav */
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom Utilities */
+.card {
+  background-color: var(--surface);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}

@@ -1,0 +1,47 @@
+.card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--surface);
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+    transition: transform 0.2s;
+}
+
+.card:active {
+    transform: scale(0.98);
+    background-color: var(--surface-highlight);
+}
+
+.iconBox {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details {
+    flex: 1;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.time {
+    margin: 2px 0 0 0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.amount {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
