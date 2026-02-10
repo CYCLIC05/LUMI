@@ -17,6 +17,13 @@
 
   --font-family: 'Inter', system-ui, sans-serif;
   --nav-height: 80px;
+
+  /* Card & Input Styles */
+  --card-gradient: linear-gradient(145deg, var(--surface), #1a1a2e);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --input-text: #ffffff;
+
 }
 
 [data-theme='light'] {
@@ -34,6 +41,12 @@
   /* Slate 400 */
 
   --primary-glow: rgba(59, 130, 246, 0.2);
+
+  /* Card & Input Styles (Light Mode) */
+  --card-gradient: linear-gradient(145deg, #ffffff, #f1f5f9);
+  --card-border: rgba(0, 0, 0, 0.05);
+  --input-bg: rgba(0, 0, 0, 0.05);
+  --input-text: var(--text-main);
 }
 
 body {

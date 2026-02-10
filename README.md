@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lumi - Daily Fare Companion
 
-## Getting Started
+Lumi is a Next.js application designed to help users track their daily transportation fares. It provides a simple, mobile-friendly interface for adding trips, viewing history, and analyzing spending statistics.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Add Trips: Quickly log transportation costs (Bus, Train, Uber, etc.).
+- Dashboard: View daily limits and recent transactions.
+- History: Browse past trips grouped by date with search functionality.
+- Statistics: Visualize spending with weekly charts and view high-cost trips.
+- Fare Context: Uses React Context for state management of transactions.
+
+## 🛠️ Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone <repository-url>
+    cd Tracker
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+## 🚀 How to Run
+
+1.  Start the development server:**
+    ```bash
+    npm run dev
+    ```
+
+2.  Open your browser:
+    Navigate to [http://localhost:3000](http://localhost:3000) to view the app.
+
+## 📂 Folder Structure
+
+```
+Tracker/
+├── app/                  # Next.js App Router
+│   ├── page.js           # Splash/Welcome screen
+│   ├── dashboard/        # Main dashboard
+│   ├── add/              # Add trip form
+│   ├── history/          # Transaction history with search/grouping
+│   ├── stats/            # Statistics and charts
+│   └── layout.js         # Root layout (likely wraps providers)
+├── components/           # Reusable UI components
+│   ├── BottomNav.jsx     # Mobile bottom navigation
+│   ├── SpendingChart.jsx # Doughnut chart for spending
+│   ├── WeeklyChart.jsx   # Bar chart for weekly analysis
+│   └── FareCard.jsx      # Display card for individual trips
+├── context/
+│   └── FareContext.js    # Global state for transactions
+├── public/               # Static assets (images, icons)
+└── utils/                # Helper functions (if any)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 Technologies Used
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Framework: [Next.js](https://nextjs.org/)
+- Styling: Inline styles & CSS Modules (for specific components).
+- Icons: [Lucide React](https://lucide.dev/)
+- Charts: [React Chartjs 2](https://react-chartjs-2.js.org/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📄 License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

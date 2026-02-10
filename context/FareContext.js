@@ -6,16 +6,29 @@ const FareContext = createContext();
 export function FareProvider({ children }) {
     const [transactions, setTransactions] = useState([]);
     const [currency, setCurrency] = useState('NGN');
+    const [userName, setUserName] = useState('Traveler');
+    const [dailyLimit, setDailyLimit] = useState(0);
 
     // Load from LocalStorage
     useEffect(() => {
-        const saved = localStorage.getItem('lumi-fares');
-        if (saved) {
+        const savedFares = localStorage.getItem('lumi-fares');
+        const savedUser = localStorage.getItem('lumi-user');
+        const savedLimit = localStorage.getItem('lumi-limit');
+
+        if (savedFares) {
             try {
-                setTransactions(JSON.parse(saved));
+                setTransactions(JSON.parse(savedFares));
             } catch (e) {
                 console.error("Failed to parse transactions", e);
             }
+        }
+
+        if (savedUser) {
+            setUserName(savedUser);
+        }
+
+        if (savedLimit) {
+            setDailyLimit(Number(savedLimit));
         }
     }, []);
 
@@ -24,9 +37,23 @@ export function FareProvider({ children }) {
         localStorage.setItem('lumi-fares', JSON.stringify(transactions));
     }, [transactions]);
 
+    useEffect(() => {
+        localStorage.setItem('lumi-user', userName);
+    }, [userName]);
+
+    useEffect(() => {
+        localStorage.setItem('lumi-limit', dailyLimit);
+    }, [dailyLimit]);
+
     const addTransaction = (transaction) => {
         const newTx = { ...transaction, id: Date.now().toString(), date: new Date().toISOString() };
         setTransactions(prev => [newTx, ...prev]);
+    };
+
+    const updateTransaction = (updatedTransaction) => {
+        setTransactions(prev => prev.map(t =>
+            t.id === updatedTransaction.id ? updatedTransaction : t
+        ));
     };
 
     const deleteTransaction = (id) => {
@@ -41,7 +68,7 @@ export function FareProvider({ children }) {
     };
 
     return (
-        <FareContext.Provider value={{ transactions, addTransaction, deleteTransaction, getTotalToday }}>
+        <FareContext.Provider value={{ transactions, addTransaction, deleteTransaction, updateTransaction, getTotalToday, userName, setUserName, dailyLimit, setDailyLimit }}>
             {children}
         </FareContext.Provider>
     );

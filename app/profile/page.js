@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, User, Share2, Trash2, Globe, Shield, ChevronRight, Moon, Sun } from 'lucide-react';
 
 export default function Profile() {
-    const { deleteAllTransactions, transactions } = useFare();
+    const { deleteAllTransactions, transactions, userName, setUserName } = useFare();
     const { theme, toggleTheme } = useTheme();
     const [confirmClear, setConfirmClear] = useState(false);
     const [currency, setCurrency] = useState('NGN');
@@ -107,9 +107,27 @@ export default function Profile() {
                         boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
                         color: 'white'
                     }}>
-                        T
+                        {userName ? userName.charAt(0).toUpperCase() : 'T'}
                     </div>
-                    <h2 style={{ fontSize: '1.4rem', marginBottom: 5 }}>Taiwo Oyewole</h2>
+                    <input
+                        type="text"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                        placeholder="Your Name"
+                        style={{
+                            background: 'transparent',
+                            border: 'none',
+                            color: 'var(--text-main)', // uses theme variable
+                            fontSize: '1.4rem',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            width: '100%',
+                            marginBottom: 5,
+                            outline: 'none',
+                            fontFamily: 'inherit'
+                        }}
+                    />
+                    <div style={{ height: 2, width: 30, background: '#3b82f6', margin: '0 auto 5px', opacity: 0.5, borderRadius: 2 }}></div>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Premium Member</p>
                 </div>
             </header>

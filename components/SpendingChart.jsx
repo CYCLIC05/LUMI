@@ -7,15 +7,17 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function SpendingChart({ data }) {
     // data format: [{ label: 'Bus', value: 100, color: '#...' }, ...]
 
+
+    // Chart Data Configuration
     const chartData = {
-        labels: data.map(d => d.label),
+        labels: data.map(dataPoint => dataPoint.label),
         datasets: [
             {
-                data: data.map(d => d.value),
-                backgroundColor: data.map(d => d.color),
+                data: data.map(dataPoint => dataPoint.value),
+                backgroundColor: data.map(dataPoint => dataPoint.color),
                 borderColor: '#12121f', // Match surface color for spacing
                 borderWidth: 2,
-                cutout: '75%', // Thinner donut
+                cutout: '75%', // Thinner donut style
             },
         ],
     };

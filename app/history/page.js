@@ -9,17 +9,19 @@ export default function History() {
     const { transactions } = useFare();
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Filter
-    const filtered = transactions.filter(t =>
-        t.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        t.amount.toString().includes(searchTerm)
+    // ONE: Search Filter
+    // Filters transactions based on title or amount matching the search term
+    const filteredTransactions = transactions.filter(transaction =>
+        transaction.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transaction.amount.toString().includes(searchTerm)
     );
 
-    // Grouping
-    const grouped = filtered.reduce((groups, t) => {
-        const date = new Date(t.date).toDateString();
+    // TWO: Date Grouping
+    // Groups transactions by date for display
+    const groupedTransactions = filteredTransactions.reduce((groups, transaction) => {
+        const date = new Date(transaction.date).toDateString();
         if (!groups[date]) groups[date] = [];
-        groups[date].push(t);
+        groups[date].push(transaction);
         return groups;
     }, {});
 
@@ -60,12 +62,12 @@ export default function History() {
                 />
             </div>
 
-            {Object.keys(grouped).length === 0 ? (
+            {Object.keys(groupedTransactions).length === 0 ? (
                 <div style={{ textAlign: 'center', color: '#64748b', marginTop: 50 }}>
                     <p>No transactions found.</p>
                 </div>
             ) : (
-                Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a)).map(date => (
+                Object.keys(groupedTransactions).sort((a, b) => new Date(b) - new Date(a)).map(date => (
                     <div key={date} style={{ marginBottom: 25 }}>
                         <h3 style={{
                             fontSize: '0.9rem',
@@ -77,8 +79,8 @@ export default function History() {
                         }}>
                             {getGroupLabel(date)}
                         </h3>
-                        {grouped[date].map(t => (
-                            <FareCard key={t.id} trip={t} />
+                        {groupedTransactions[date].map(transaction => (
+                            <FareCard key={transaction.id} trip={transaction} />
                         ))}
                     </div>
                 ))

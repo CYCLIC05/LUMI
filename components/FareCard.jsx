@@ -1,5 +1,8 @@
-import { Bus, Car, Train, Gauge } from 'lucide-react';
+import Link from 'next/link';
+import { Bus, Car, Train, Gauge, Edit2, Trash2 } from 'lucide-react';
 import styles from './FareCard.module.css';
+import { useFare } from '@/context/FareContext';
+import { useRouter } from 'next/navigation';
 
 const getIcon = (type) => {
     switch (type?.toLowerCase()) {
@@ -20,21 +23,33 @@ const getColor = (type) => {
 }
 
 export default function FareCard({ trip }) {
-    const { type, title, time, amount } = trip;
+    const { type, title, time, amount, id } = trip;
     const color = getColor(type);
+    const { deleteTransaction } = useFare();
+    const router = useRouter();
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (confirm('Delete this trip?')) {
+            deleteTransaction(id);
+        }
+    };
 
     return (
-        <div className={styles.card}>
-            <div className={styles.iconBox} style={{ backgroundColor: `${color}20`, color: color }}>
-                {getIcon(type)}
+        <Link href={`/edit/${id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+            <div className={styles.card}>
+                <div className={styles.iconBox} style={{ backgroundColor: `${color}20`, color: color }}>
+                    {getIcon(type)}
+                </div>
+                <div className={styles.details}>
+                    <h3 className={styles.title}>{title}</h3>
+                    <p className={styles.time}>{time}</p>
+                </div>
+                <div className={styles.amount}>
+                    ₦{amount.toLocaleString()}
+                </div>
             </div>
-            <div className={styles.details}>
-                <h3 className={styles.title}>{title}</h3>
-                <p className={styles.time}>{time}</p>
-            </div>
-            <div className={styles.amount}>
-                ₦{amount.toLocaleString()}
-            </div>
-        </div>
+        </Link>
     );
 }
