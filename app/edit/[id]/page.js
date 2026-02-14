@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFare } from '@/context/FareContext';
 import { Bus, Car, Train, ArrowLeft, Trash2 } from 'lucide-react';
@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function EditFare({ params }) {
     const router = useRouter();
     const { transactions, updateTransaction, deleteTransaction } = useFare();
-    const { id } = params;
+    const { id } = use(params);
 
     const [amount, setAmount] = useState('');
     const [type, setType] = useState('Bus');

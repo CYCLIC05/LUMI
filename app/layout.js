@@ -8,6 +8,10 @@ export const metadata = {
   title: "LUMI - Daily Fare Tracker",
   description: "Track your transport expenses.",
   manifest: "/manifest.json",
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+  },
 };
 
 import { ThemeProvider } from "@/context/ThemeContext";

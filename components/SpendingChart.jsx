@@ -1,41 +1,17 @@
 "use client";
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function SpendingChart({ data }) {
-    // data format: [{ label: 'Bus', value: 100, color: '#...' }, ...]
-
-
-    // Chart Data Configuration
-    const chartData = {
-        labels: data.map(dataPoint => dataPoint.label),
-        datasets: [
-            {
-                data: data.map(dataPoint => dataPoint.value),
-                backgroundColor: data.map(dataPoint => dataPoint.color),
-                borderColor: '#12121f', // Match surface color for spacing
-                borderWidth: 2,
-                cutout: '75%', // Thinner donut style
-            },
-        ],
-    };
+    // data format: { labels: ['9:00 AM', '10:00 AM'], datasets: [{ data: [500, 200], ... }] }
 
     const options = {
         responsive: true,
         plugins: {
             legend: {
-                position: 'right',
-                labels: {
-                    color: '#94a3b8', // text-secondary
-                    usePointStyle: true,
-                    boxWidth: 8,
-                    font: {
-                        family: 'Inter',
-                        size: 11
-                    }
-                }
+                display: false, // Hide legend for cleaner look
             },
             tooltip: {
                 backgroundColor: '#1e1e2d',
@@ -43,23 +19,52 @@ export default function SpendingChart({ data }) {
                 bodyColor: '#fff',
                 padding: 10,
                 cornerRadius: 8,
-                displayColors: true,
+                displayColors: false,
+                callbacks: {
+                    label: (context) => `₦${context.raw.toLocaleString()}`
+                }
             }
         },
-        maintainAspectRatio: false
+        scales: {
+            x: {
+                grid: {
+                    display: false,
+                    drawBorder: false,
+                },
+                ticks: {
+                    color: '#64748b',
+                    font: {
+                        family: 'Inter',
+                        size: 10
+                    }
+                }
+            },
+            y: {
+                grid: {
+                    color: 'rgba(255, 255, 255, 0.05)',
+                    drawBorder: false,
+                },
+                ticks: {
+                    color: '#64748b',
+                    font: {
+                        family: 'Inter',
+                        size: 10
+                    },
+                    callback: (value) => '₦' + value
+                },
+                beginAtZero: true
+            }
+        },
+        maintainAspectRatio: false,
+        animation: {
+            duration: 1000,
+            easing: 'easeOutQuart'
+        }
     };
 
-    const total = data.reduce((acc, curr) => acc + curr.value, 0);
-
     return (
-        <div style={{ height: 180, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ position: 'absolute', textAlign: 'center', pointerEvents: 'none', left: '0', right: '100px' }}>
-                <span style={{ display: 'block', fontSize: '0.7rem', color: '#64748b' }}>Total</span>
-                <span style={{ display: 'block', fontSize: '1rem', fontWeight: 'bold', color: 'white' }}>
-                    ₦{total.toLocaleString()}
-                </span>
-            </div>
-            <Doughnut data={chartData} options={options} />
+        <div style={{ height: 180, width: '100%' }}>
+            <Bar data={data} options={options} />
         </div>
     );
 }

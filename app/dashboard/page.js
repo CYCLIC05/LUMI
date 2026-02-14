@@ -16,20 +16,26 @@ export default function Dashboard() {
     const today = new Date().toDateString();
     const todayTransactions = transactions.filter(t => new Date(t.date).toDateString() === today);
 
-    // Group by type
-    const breakdown = todayTransactions.reduce((acc, t) => {
-        acc[t.type] = (acc[t.type] || 0) + Number(t.amount);
-        return acc;
-    }, {});
+    // Sort by time
+    const sortedTransactions = [...todayTransactions].sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    const chartData = Object.keys(breakdown).map(type => ({
-        label: type,
-        value: breakdown[type],
-        color: type === 'Bus' ? '#3b82f6' : type === 'Car' ? '#10b981' : type === 'Train' ? '#f59e0b' : '#64748b'
-    }));
+    // Prepare chart data
+    const chartData = {
+        labels: sortedTransactions.map(t => t.time || new Date(t.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })),
+        datasets: [{
+            data: sortedTransactions.map(t => t.amount),
+            backgroundColor: sortedTransactions.map(t =>
+                t.type === 'Bus' ? '#3b82f6' :
+                    t.type === 'Car' ? '#10b981' :
+                        t.type === 'Train' ? '#f59e0b' : '#64748b'
+            ),
+            borderRadius: 6,
+            barThickness: 20,
+        }]
+    };
 
     // If no data, show placeholder or empty stats
-    const hasSpending = chartData.length > 0;
+    const hasSpending = sortedTransactions.length > 0;
 
     return (
         <div style={{ padding: '20px 20px 100px 20px' }}>

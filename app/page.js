@@ -1,5 +1,5 @@
 "use client";
-"use client";
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -43,20 +43,10 @@ export default function Splash() {
     }}>
       {/* Logo Container */}
       <div style={{
-        width: 100, height: 100,
-        background: '#3b82f6',
-        borderRadius: 20,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         marginBottom: 20,
-        boxShadow: '0 0 40px rgba(59, 130, 246, 0.4)'
       }}>
-        <h1 style={{ fontSize: 60, color: 'white', margin: 0 }}>L</h1>
+        <img src="/icon.png" alt="LUMI Logo" style={{ width: 180, height: 180, borderRadius: 20, objectFit: 'contain' }} />
       </div>
-
-      <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: 10 }}>LUMI</h2>
-      <p style={{ color: '#94a3b8', marginBottom: 60, letterSpacing: 2 }}>YOUR DAILY FARE COMPANION</p>
     </div>
   );
 }

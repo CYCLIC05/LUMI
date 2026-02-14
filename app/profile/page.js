@@ -4,26 +4,27 @@ import { useFare } from '@/context/FareContext';
 import { useTheme } from '@/context/ThemeContext';
 import Link from 'next/link';
 import { ArrowLeft, User, Share2, Trash2, Globe, Shield, ChevronRight, Moon, Sun } from 'lucide-react';
+import ConfirmationModal from '@/components/ConfirmationModal';
 
 export default function Profile() {
     const { deleteAllTransactions, transactions, userName, setUserName } = useFare();
     const { theme, toggleTheme } = useTheme();
-    const [confirmClear, setConfirmClear] = useState(false);
     const [currency, setCurrency] = useState('NGN');
 
-    const handleClearData = () => {
-        if (confirmClear) {
-            localStorage.removeItem('lumi-fares');
-            window.location.reload();
-        } else {
-            setConfirmClear(true);
-            setTimeout(() => setConfirmClear(false), 3000);
-        }
+    // Modal state
+    const [showExportModal, setShowExportModal] = useState(false);
+    const [showClearModal, setShowClearModal] = useState(false);
+
+    const performClearData = () => {
+        localStorage.removeItem('lumi-fares');
+        // Optional: Call context method if available, but reload works for full reset
+        window.location.reload();
     };
 
-    const handleExport = () => {
+    const performExport = () => {
         if (!transactions || transactions.length === 0) {
-            alert("No data to export");
+            alert("No data to export"); // Could use a toast here ideally
+            setShowExportModal(false);
             return;
         }
 
@@ -43,6 +44,8 @@ export default function Profile() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+
+        setShowExportModal(false);
     };
 
     const handlePrivacy = () => {
@@ -151,7 +154,7 @@ export default function Profile() {
                     label="Export Data"
                     value="CSV"
                     color="#10b981"
-                    action={handleExport}
+                    action={() => setShowExportModal(true)}
                 />
                 <SettingItem
                     icon={<Shield size={20} />}
@@ -160,7 +163,7 @@ export default function Profile() {
                     action={handlePrivacy}
                 />
 
-                <div onClick={handleClearData} style={{
+                <div onClick={() => setShowClearModal(true)} style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
@@ -180,8 +183,8 @@ export default function Profile() {
                         }}>
                             <Trash2 size={20} />
                         </div>
-                        <span style={{ fontSize: '0.95rem', color: confirmClear ? '#ef4444' : 'var(--text-main)' }}>
-                            {confirmClear ? "Tap again to confirm" : "Clear All Data"}
+                        <span style={{ fontSize: '0.95rem', color: 'var(--text-main)' }}>
+                            Clear All Data
                         </span>
                     </div>
                 </div>
@@ -190,6 +193,27 @@ export default function Profile() {
             <p style={{ textAlign: 'center', color: '#334155', marginTop: 40, fontSize: '0.8rem' }}>
                 LUMI Tracker v1.0.0
             </p>
+
+            {/* Confirmation Modals */}
+            <ConfirmationModal
+                isOpen={showExportModal}
+                onClose={() => setShowExportModal(false)}
+                onConfirm={performExport}
+                title="Export Data"
+                message="Do you want to export all your transaction history as a CSV file?"
+                confirmText="Export CSV"
+                confirmColor="#10b981"
+            />
+
+            <ConfirmationModal
+                isOpen={showClearModal}
+                onClose={() => setShowClearModal(false)}
+                onConfirm={performClearData}
+                title="Clear All Data?"
+                message="This action cannot be undone. All your tracked fares and settings will be permanently deleted from this device."
+                confirmText="Delete Everything"
+                confirmColor="#ef4444"
+            />
         </div>
     );
 }
