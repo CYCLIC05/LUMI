@@ -9,7 +9,10 @@ export const metadata = {
   description: "Track your transport expenses.",
   manifest: "/manifest.json",
   icons: {
-    icon: '/icon.png',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon.png' }
+    ],
     apple: '/icon.png',
   },
 };

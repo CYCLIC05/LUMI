@@ -8,45 +8,29 @@ import { ArrowLeft, Share2 } from 'lucide-react';
 export default function Stats() {
     const { transactions } = useFare();
 
-    // Calculate Weekly Data (Last 7 Days)
-    /**
-     * Calculates total spending for the current week (Monday to Sunday).
-     * @returns {number[]} Array of 7 numbers representing daily totals (Mon-Sun).
-     */
+    // Calculate Weekly Data (Current Week)
     const getWeeklyData = () => {
-        const result = [0, 0, 0, 0, 0, 0, 0]; // Index 0 = Mon, 6 = Sun
         const now = new Date();
-
-        // Calculate the start of the week (Monday) with "Current Week" logic
-        const currentDay = now.getDay(); // 0 (Sun) - 6 (Sat)
-        // Calculate days to subtract to get to Monday.
-        // If Sunday (0), subtract 6. If Mon (1), subtract 0. If Tue (2), subtract 1.
-        // diff calculation: currentDay - 1 (except sun).
-        // Correct logic: if 0 (Sun), go back 6 days. Else go back currentDay - 1 days.
+        const currentDay = now.getDay();
         const diff = now.getDate() - currentDay + (currentDay === 0 ? -6 : 1);
         const monday = new Date(now.setDate(diff));
         monday.setHours(0, 0, 0, 0);
 
-        transactions.forEach(transaction => {
-            const date = new Date(transaction.date);
-            // Only include transactions from this week's Monday onwards
-            if (date >= monday) {
-                // Determine array index: 0 (Mon) - 6 (Sun)
-                let dayIndex = date.getDay(); // Returns 0 for Sunday
+        const weeklyTransactions = transactions
+            .filter(t => new Date(t.date) >= monday)
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-                // Map Sunday (0) to 6, and others (1-6) to (0-5)
-                dayIndex = dayIndex === 0 ? 6 : dayIndex - 1;
-
-                if (dayIndex >= 0 && dayIndex < 7) {
-                    result[dayIndex] += Number(transaction.amount);
-                }
-            }
+        const labels = weeklyTransactions.map(t => {
+            const date = new Date(t.date);
+            return `${date.toLocaleDateString('en-US', { weekday: 'short' })} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
         });
 
-        return result;
+        const data = weeklyTransactions.map(t => t.amount);
+
+        return { labels, data };
     };
 
-    const weeklyData = getWeeklyData();
+    const weeklyChartData = getWeeklyData();
 
     /**
      * Calculates total spending for the current month.
@@ -75,45 +59,46 @@ export default function Stats() {
         .slice(0, 5);
 
     return (
-        <div style={{ padding: '20px 20px 100px 20px' }}>
-            <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-                <Link href="/dashboard" style={{ color: 'white' }}><ArrowLeft /></Link>
-                <h1 style={{ fontSize: '1.2rem', margin: 0 }}>Statistics</h1>
-                <Share2 size={20} color="#94a3b8" />
+        <div style={{ padding: '24px 20px 100px 20px' }}>
+            <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
+                <Link href="/dashboard" style={{ color: 'white', display: 'flex', alignItems: 'center' }}><ArrowLeft size={22} /></Link>
+                <h1 style={{ fontSize: '1.35rem', margin: 0, fontWeight: '600', color: 'white' }}>Statistics</h1>
+                <Share2 size={20} color="#94a3b8" style={{ cursor: 'pointer' }} />
             </header>
 
-            <WeeklyChart data={weeklyData} />
+            <WeeklyChart chartData={weeklyChartData} />
 
-            <section style={{ marginBottom: 25 }}>
+            <section style={{ marginBottom: 28 }}>
                 <div style={{
-                    background: 'linear-gradient(135deg, #1e1e2d, #2d2d42)',
+                    background: 'linear-gradient(135deg, #1e1e2d, #252538)',
                     borderRadius: 20,
-                    padding: 20,
+                    padding: 24,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)'
                 }}>
                     <div>
-                        <h2 style={{ fontSize: '0.9rem', color: '#94a3b8', margin: '0 0 5px 0' }}>This Month</h2>
-                        <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>₦{monthlyTotal.toLocaleString()}</p>
+                        <h2 style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0 0 8px 0', fontWeight: '500', letterSpacing: '0.5px' }}>This Month</h2>
+                        <p style={{ fontSize: '1.6rem', fontWeight: '700', margin: 0, color: 'white' }}>₦{monthlyTotal.toLocaleString()}</p>
                     </div>
                     <div style={{
-                        width: 45, height: 45,
-                        borderRadius: 12,
-                        background: 'rgba(59, 130, 246, 0.15)',
+                        width: 48, height: 48,
+                        borderRadius: 14,
+                        background: 'rgba(79, 117, 255, 0.15)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        color: '#3b82f6'
+                        color: '#4F75FF'
                     }}>
-                        <span style={{ fontSize: '1.2rem' }}>📅</span>
+                        <span style={{ fontSize: '1.3rem' }}>📅</span>
                     </div>
                 </div>
             </section>
 
             <section>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15 }}>
-                    <h2 style={{ fontSize: '1.1rem', margin: 0 }}>High-Cost Trips</h2>
-                    <Link href="/history" style={{ color: '#3b82f6', fontSize: '0.85rem', textDecoration: 'none' }}>View all</Link>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                    <h2 style={{ fontSize: '1.15rem', margin: 0, fontWeight: '600', color: 'white' }}>High-Cost Trips</h2>
+                    <Link href="/history" style={{ color: '#4F75FF', fontSize: '0.85rem', textDecoration: 'none', fontWeight: '500' }}>View all</Link>
                 </div>
 
                 {highCostTrips.length === 0 ? (

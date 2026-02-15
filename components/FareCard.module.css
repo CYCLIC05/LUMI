@@ -1,47 +1,57 @@
-.card {
+.fareCard {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background-color: var(--surface);
-    border-radius: 1rem;
-    margin-bottom: 0.75rem;
-    transition: transform 0.2s;
+    background: linear-gradient(135deg, #1a1a2e 0%, #1e1e2d 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.card:active {
-    transform: scale(0.98);
-    background-color: var(--surface-highlight);
+.fareCard:hover {
+    background: linear-gradient(135deg, #1e1e2d 0%, #252538 100%);
+    transform: translateX(4px);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
-.iconBox {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+.icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 1 4px;
+    font-size: 1.3rem;
+    flex-shrink: 0;
 }
 
 .details {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: white;
     margin: 0;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-main);
 }
 
 .time {
-    margin: 2px 0 0 0;
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0;
 }
 
 .amount {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--text-main);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    margin-left: auto;
+    flex-shrink: 0;
 }

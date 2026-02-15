@@ -23,28 +23,34 @@ ChartJS.register(
     Filler
 );
 
-export default function WeeklyChart({ data }) {
-    // data: array of numbers for last 7 days [Mon, Tue, ..., Sun]
+export default function WeeklyChart({ chartData }) {
+    // Safely handle missing data
+    const labels = chartData?.labels || [];
+    const points = chartData?.data || [];
+    // If we have points but labels is empty or vice versa, proceed safely
 
-    const chartData = {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    // Check if we have valid data to render
+    const hasData = points.length > 0;
+
+    const data = {
+        labels: labels,
         datasets: [
             {
                 label: 'Spending',
-                data: data,
+                data: points,
                 fill: true,
                 backgroundColor: (context) => {
                     const ctx = context.chart.ctx;
-                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)'); // primary with opacity
-                    gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                    gradient.addColorStop(0, 'rgba(79, 117, 255, 0.4)');
+                    gradient.addColorStop(1, 'rgba(79, 117, 255, 0)');
                     return gradient;
                 },
-                borderColor: '#3b82f6',
+                borderColor: '#4F75FF',
                 borderWidth: 2,
-                tension: 0.4, // Smooth curve
+                tension: 0.3, // Smoother curve
                 pointBackgroundColor: '#1e1e2d',
-                pointBorderColor: '#3b82f6',
+                pointBorderColor: '#4F75FF',
                 pointBorderWidth: 2,
                 pointRadius: 4,
                 pointHoverRadius: 6,
@@ -63,8 +69,9 @@ export default function WeeklyChart({ data }) {
                 backgroundColor: '#1e1e2d',
                 titleColor: '#fff',
                 bodyColor: '#fff',
-                padding: 10,
-                cornerRadius: 8,
+                padding: 12,
+                cornerRadius: 12,
+                displayColors: false,
                 callbacks: {
                     label: function (context) {
                         return '₦ ' + context.parsed.y.toLocaleString();
@@ -75,12 +82,14 @@ export default function WeeklyChart({ data }) {
         scales: {
             x: {
                 grid: {
-                    display: false, // Hide x grid
+                    display: false,
                     drawBorder: false,
                 },
                 ticks: {
                     color: '#64748b',
-                    font: { size: 10 }
+                    font: { size: 10 },
+                    maxRotation: 45,
+                    minRotation: 45
                 }
             },
             y: {
@@ -90,7 +99,7 @@ export default function WeeklyChart({ data }) {
                     drawBorder: false,
                 },
                 ticks: {
-                    display: false // Hide y labels for cleaner look
+                    display: false
                 },
                 beginAtZero: true
             }
@@ -101,20 +110,25 @@ export default function WeeklyChart({ data }) {
         },
     };
 
-    const total = data.reduce((a, b) => a + b, 0);
+    const total = points.reduce((a, b) => a + b, 0);
 
     return (
         <div style={{ background: '#12121f', borderRadius: 24, padding: 20, marginBottom: 25, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
                 <div>
-                    <h3 style={{ fontSize: '0.85rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 1, margin: '0 0 5px 0' }}>Itinerary</h3>
+                    <h3 style={{ fontSize: '0.85rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 1, margin: '0 0 5px 0' }}>Weekly Spending</h3>
                     <p style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'white', margin: 0 }}>₦{total.toLocaleString()}</p>
                 </div>
-                {/* Could add percentage change here if we had last week's data */}
             </div>
 
-            <div style={{ height: 200 }}>
-                <Line data={chartData} options={options} />
+            <div style={{ height: 250 }}>
+                {hasData ? (
+                    <Line data={data} options={options} />
+                ) : (
+                    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' }}>
+                        No transactions this week
+                    </div>
+                )}
             </div>
         </div>
     );

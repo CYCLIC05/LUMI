@@ -35,15 +35,14 @@ export default function History() {
     };
 
     return (
-        <div style={{ padding: '20px 20px 100px 20px' }}>
-            <header style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-                <Link href="/dashboard" style={{ color: 'white' }}><ArrowLeft /></Link>
-                <h1 style={{ fontSize: '1.2rem', margin: 0, flex: 1 }}>History</h1>
-                {/* <Search size={20} color="#94a3b8" /> */}
+        <div style={{ padding: '24px 20px 100px 20px' }}>
+            <header style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+                <Link href="/dashboard" style={{ color: 'white', display: 'flex', alignItems: 'center' }}><ArrowLeft size={22} /></Link>
+                <h1 style={{ fontSize: '1.35rem', margin: 0, flex: 1, fontWeight: '600', color: 'white' }}>History</h1>
             </header>
 
-            <div style={{ position: 'relative', marginBottom: 25 }}>
-                <Search size={18} color="#94a3b8" style={{ position: 'absolute', left: 15, top: '50%', transform: 'translateY(-50%)' }} />
+            <div style={{ position: 'relative', marginBottom: 28 }}>
+                <Search size={18} color="#94a3b8" style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)' }} />
                 <input
                     type="text"
                     placeholder="Search transactions..."
@@ -51,13 +50,14 @@ export default function History() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     style={{
                         width: '100%',
-                        background: '#1e1e2d',
-                        border: 'none',
-                        padding: '12px 12px 12px 45px',
-                        borderRadius: 12,
+                        background: 'rgba(255, 255, 255, 0.06)',
+                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        padding: '14px 14px 14px 48px',
+                        borderRadius: 14,
                         color: 'white',
                         outline: 'none',
-                        fontSize: '0.9rem'
+                        fontSize: '0.92rem',
+                        transition: 'all 0.3s ease'
                     }}
                 />
             </div>
@@ -68,14 +68,14 @@ export default function History() {
                 </div>
             ) : (
                 Object.keys(groupedTransactions).sort((a, b) => new Date(b) - new Date(a)).map(date => (
-                    <div key={date} style={{ marginBottom: 25 }}>
+                    <div key={date} style={{ marginBottom: 28 }}>
                         <h3 style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.8rem',
                             color: '#94a3b8',
-                            marginBottom: 10,
+                            marginBottom: 12,
                             textTransform: 'uppercase',
-                            letterSpacing: 1,
-                            fontWeight: 600
+                            letterSpacing: '1.5px',
+                            fontWeight: '600'
                         }}>
                             {getGroupLabel(date)}
                         </h3>

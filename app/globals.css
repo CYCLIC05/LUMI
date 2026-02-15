@@ -8,43 +8,41 @@
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
 
-  --primary: #3b82f6;
-  --primary-glow: rgba(59, 130, 246, 0.5);
+  /* Updated to match reference design */
+  --primary: #4F75FF;
+  --primary-dark: #2E5BFF;
+  --primary-glow: rgba(79, 117, 255, 0.4);
 
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
 
-  --font-family: 'Inter', system-ui, sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
   --nav-height: 80px;
 
   /* Card & Input Styles */
-  --card-gradient: linear-gradient(145deg, var(--surface), #1a1a2e);
+  --card-gradient: linear-gradient(145deg, #1a1a2e, #12121f);
   --card-border: rgba(255, 255, 255, 0.05);
-  --input-bg: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --input-bg: rgba(255, 255, 255, 0.08);
   --input-text: #ffffff;
-
 }
 
 [data-theme='light'] {
   --background: #f8fafc;
-  /* Slate 50 */
   --surface: #ffffff;
   --surface-highlight: #f1f5f9;
-  /* Slate 100 */
 
   --text-main: #0f172a;
-  /* Slate 900 */
   --text-secondary: #475569;
-  /* Slate 600 */
   --text-muted: #94a3b8;
-  /* Slate 400 */
 
-  --primary-glow: rgba(59, 130, 246, 0.2);
+  --primary-glow: rgba(79, 117, 255, 0.2);
 
   /* Card & Input Styles (Light Mode) */
-  --card-gradient: linear-gradient(145deg, #ffffff, #f1f5f9);
-  --card-border: rgba(0, 0, 0, 0.05);
+  --card-gradient: linear-gradient(145deg, #ffffff, #f8fafc);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   --input-bg: rgba(0, 0, 0, 0.05);
   --input-text: var(--text-main);
 }
@@ -57,18 +55,8 @@ body {
   padding: 0;
   padding-bottom: var(--nav-height);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body {
-  background-color: var(--background);
-  color: var(--text-main);
-  font-family: var(--font-family);
-  margin: 0;
-  padding: 0;
-  padding-bottom: var(--nav-height);
-  /* Space for bottom nav */
-  -webkit-font-smoothing: antialiased;
 }
 
 * {
@@ -77,25 +65,37 @@ body {
 
 /* Custom Utilities */
 .card {
-  background-color: var(--surface);
-  border-radius: 1.5rem;
+  background: var(--card-gradient);
+  border: 1px solid var(--card-border);
+  border-radius: 1.25rem;
   padding: 1.25rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow);
   margin-bottom: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
   padding: 1rem 2rem;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   font-weight: 600;
   border: none;
   cursor: pointer;
   width: 100%;
   font-size: 1rem;
-  transition: all 0.2s;
-  box-shadow: 0 0 20px var(--primary-glow);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px var(--primary-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px var(--primary-glow);
 }
 
 .btn-primary:active {
@@ -103,7 +103,7 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

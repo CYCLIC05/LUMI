@@ -1,93 +1,100 @@
 .card {
-    background: var(--card-gradient);
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #1e1e2d 0%, #252538 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.percentage {
+    background: rgba(79, 117, 255, 0.15);
+    color: #4F75FF;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.balance {
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
 }
 
 .progressBarContainer {
     width: 100%;
     height: 6px;
-    background: var(--input-bg);
-    border-radius: 3px;
-    margin: 10px 0;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
     overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.limitBtn {
+    background: rgba(79, 117, 255, 0.1);
+    border: 1px solid rgba(79, 117, 255, 0.3);
+    color: #4F75FF;
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.limitBtn:hover {
+    background: rgba(79, 117, 255, 0.15);
+    border-color: rgba(79, 117, 255, 0.5);
+    transform: translateY(-1px);
 }
 
 .inputField {
-    background: var(--input-bg);
-    border: 1px solid var(--card-border);
-    color: var(--input-text);
-    padding: 5px 10px;
-    border-radius: 8px;
-    width: 100px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 16px;
+    border-radius: 12px;
+    color: white;
     font-size: 0.9rem;
     outline: none;
-    transition: all 0.2s;
 }
 
 .inputField:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px var(--primary-glow);
+    border-color: #4F75FF;
+    background: rgba(79, 117, 255, 0.1);
 }
 
 .cancelBtn {
-    background: transparent;
-    color: var(--text-muted);
-    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    padding: 10px 16px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 0.85rem;
-    padding: 5px 10px;
-    border-radius: 6px;
     transition: all 0.2s;
 }
 
 .cancelBtn:hover {
-    background: var(--input-bg);
-    color: var(--text-main);
-}
-
-
-.header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 0.5rem;
-}
-
-.label {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.percentage {
-    color: var(--success);
-    font-size: 0.75rem;
-    background: rgba(16, 185, 129, 0.1);
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-.balance {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0.5rem 0;
-    color: var(--text-main);
-}
-
-.limitBtn {
-    background: transparent;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    margin-top: 0.5rem;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
 }
