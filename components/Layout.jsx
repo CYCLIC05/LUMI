@@ -1,4 +1,5 @@
 import BottomNav from './BottomNav';
+import WelcomeScreen from './WelcomeScreen';
 
 /**
  * Layout Component
@@ -7,6 +8,7 @@ import BottomNav from './BottomNav';
 export default function Layout({ children }) {
     return (
         <div className="app-container">
+            <WelcomeScreen />
             <main className="content">
                 {children}
             </main>
